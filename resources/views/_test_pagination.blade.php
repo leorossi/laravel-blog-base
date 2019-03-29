@@ -1,0 +1,1 @@
+Pagina corrente: {{ $paginator->currentPage() }}
