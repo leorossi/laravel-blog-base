@@ -1,40 +1,107 @@
-# A Laravel simple blog
+# LaraVue Exercise
 
-This is a simple Laravel project that is used as starting point for my intermediate/advanced laravel course.
-
-It's a simple blog platform, where users can create posts and comments. There is an 'admin area' where you can publish/unpublish posts, and create users.
-
-## Disclaimer
-
-The purpose of this project is skip the basic laravel app-building phase and get started with more advanced topics. 
-
-There are many refactors, optimizations and best practices to be implemented, I know ;) but that's intended! Please don't open issues/PR for this kind of stuff, but I am more than open for suggestions.
-
-
-## Usage
-
-Install as a normal laravel app (I suggest to use [Laradock](https://laradock.io))
-Run `npm install` and `composer install` to install all dependencies.
-Generate assets with `npm run development` (or `npm run watch`)
-
-Run migrations and seed the database with `php artisan migrate --seed`. This will create 3 basic users for the 3 roles (`superadmin`, `admin` and `editor`): 
-
-
-## Custom `artisan` commands
-
-### Generate 100 fake posts
+## Install & Run
 
 ```
-php artisan posts:generate 100
+$ git clone $THISREPO
+
+$ cd laramind-laravue
+$ git clone https://github.com/laradock/laradock
+$ cd laradock
+$ .env                                              // Edit your project info
+$ docker-compose up -d nginx mysql workspace        // Start containers 
+$ docker-compose exec workspace bash                // Attach to workspace container
+
+# composer install
+# php artisan migrate --seed
+# phpunit                                           // Run test suite, everything should be green. 
+                                                    // Remember to define a DB_DATABASE_TEST variable in your .env file and
+                                                    // Create such database, and give the standard user all grants to it. 
+ 
 ```
 
-### Generate 10 fake posts
+You are ready to launch your project!
+
+## Seed data
+
+From within your workspace container
 
 ```
-php artisan users:generate 10
+# php artisan users:generate 10 editor                    // Generates 10 editor users
+# php artisan users:generate 10 reader                    // Generates 10 reader users
+# php artisan posts:generate 50                           // Generates 50 posts
 ```
 
+## API
 
+### API Authentication
 
+All requests to `/api/...` endpoints must be authenticated. 
 
+Every user has an `api_token` field, that should be sent in a query parameter `&api_token=YOUR_TOKEN`
+
+### API Documentation
+
+#### Create Post
+
+```
+POST /api/posts
+Params:
+    title: string
+    body: string
+```
+
+#### Delete Post
+
+```
+DELETE /api/posts/POST_ID
+```
+
+#### Update Post
+
+```
+PUT /api/posts/POST_ID
+Params:
+    title: string|optional
+    body: string|optional   
+```
+
+#### Get Post list
+```
+GET /api/posts
+```
+
+#### Get user's post list
+```
+GET /api/users/USER_ID/posts
+```
+
+#### Create Comment
+
+```
+POST /api/posts/POST_ID/comments
+Params:
+    body: string
+```
+
+#### Delete Comment
+
+```
+DELETE /api/comments/COMMENT_ID
+```
+
+#### Update Comment
+
+```
+PUT /api/comments/COMMENT_ID
+Params:
+    body: string   
+```
+
+#### Get Post Comments
+```
+GET /api/posts/POST_ID/comments
+```
+
+There are policies so that only who created post/comment can delete that resource, otherwise a 403 error will be returned.
 

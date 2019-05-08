@@ -11,7 +11,7 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        $roles = ['superadmin', 'admin', 'editor'];
+        $roles = ['admin', 'editor', 'reader'];
         foreach($roles as $role) {
             $model = new \App\Role();
             $model->name = $role;

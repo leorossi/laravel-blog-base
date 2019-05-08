@@ -11,13 +11,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $superAdmin = new \App\User();
-        $superAdmin->name = 'Super Admin';
-        $superAdmin->email = 'superadmin@domain.com';
-        $superAdmin->password = \Illuminate\Support\Facades\Hash::make('secret');
-        $superAdmin->role()->associate(\App\Role::where('name', 'superadmin')->first());
-        $superAdmin->save();
-    
         $admin = new \App\User();
         $admin->name = 'Admin';
         $admin->email = 'admin@domain.com';

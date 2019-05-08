@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Post;
+use App\Role;
 use Illuminate\Console\Command;
 
 class GeneratePostsCommand extends Command
@@ -39,7 +40,14 @@ class GeneratePostsCommand extends Command
     public function handle()
     {
         $amount = intVal($this->argument('amount'));
-        factory(Post::class, $amount)->create();
-        $this->info('Created ' . $amount . ' posts.');
+        $editorRole = Role::where('name', 'editor')->first();
+        if ($editorRole) {
+            foreach ($editorRole->users as $user) {
+                factory(Post::class, $amount)->create([
+                    'user_id' => $user->id
+                ]);
+                $this->info('Created ' . $amount . ' posts for user ' . $user->id);
+            }
+        }
     }
 }
