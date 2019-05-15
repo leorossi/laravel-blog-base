@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Gate;
 
 class PostsController extends BaseApiController
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only(['store', 'update', 'destroy']);
+    }
+    
     public function index()
     {
         // gets all posts

@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class CommentsController extends BaseApiController
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only(['store', 'update', 'destroy']);
+    }
     /**
      * Display a listing of the resource.
      *
