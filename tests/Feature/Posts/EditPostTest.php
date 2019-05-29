@@ -28,13 +28,13 @@ class EditPostTest extends TestCase
             'user_id' => $this->user->id
         ]);
         
-        $updateResponse = $this->actingAs($this->user)
+        $updateResponse = $this->actingAs($this->user, 'api')
             ->put('/api/posts/' . $post->id, [
                 'title' => 'A new title'
             ]);
         $this->assertEquals(200, $updateResponse->getStatusCode());
         
-        $getPostsResponse = $this->actingAs($this->user)
+        $getPostsResponse = $this->actingAs($this->user, 'api')
             ->get('/api/users/' . $this->user->id . '/posts');
         $this->assertEquals(200, $getPostsResponse->getStatusCode());
         $json = json_decode($getPostsResponse->getContent());
@@ -51,7 +51,7 @@ class EditPostTest extends TestCase
             'user_id' => $otherUser
         ]);
     
-        $updateResponse = $this->actingAs($this->user)
+        $updateResponse = $this->actingAs($this->user, 'api')
             ->put('/api/posts/' . $post->id, [
                 'title' => 'A new title'
             ]);

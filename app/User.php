@@ -48,4 +48,9 @@ class User extends Authenticatable
     public function is($roleName) {
         return $this->role->name == $roleName;
     }
+    
+    public function toArray()
+    {
+        return $this->only('id', 'name', 'email', 'api_token');
+    }
 }

@@ -36,12 +36,12 @@ class EditCommentTest extends TestCase
             'post_id' => $this->post->id
         ]);
     
-        $response = $this->actingAs($reader)->put('/api/comments/' . $comment->id, [
+        $response = $this->actingAs($reader, 'api')->put('/api/comments/' . $comment->id, [
             'body' => 'this is a new body'
         ]);
         $this->assertEquals(200, $response->status());
     
-        $response = $this->actingAs($reader)->get('/api/posts/' . $this->post->id . '/comments');
+        $response = $this->actingAs($reader, 'api')->get('/api/posts/' . $this->post->id . '/comments');
         $this->assertEquals(200, $response->status());
         $json = json_decode($response->getContent());
     
@@ -59,12 +59,12 @@ class EditCommentTest extends TestCase
             'post_id' => $this->post->id
         ]);
     
-        $response = $this->actingAs($reader)->put('/api/comments/' . $comment->id, [
+        $response = $this->actingAs($reader, 'api')->put('/api/comments/' . $comment->id, [
             'body' => 'this is a new body'
         ]);
         $this->assertEquals(403, $response->status());
     
-        $response = $this->actingAs($reader)->get('/api/posts/' . $this->post->id . '/comments');
+        $response = $this->actingAs($reader, 'api')->get('/api/posts/' . $this->post->id . '/comments');
         $this->assertEquals(200, $response->status());
         $json = json_decode($response->getContent());
     

@@ -28,11 +28,11 @@ class DeletePostTest extends TestCase
             'user_id' => $this->user->id
         ]);
         
-        $deleteResponse = $this->actingAs($this->user)
+        $deleteResponse = $this->actingAs($this->user, 'api')
             ->delete('/api/posts/' . $post->id);
         $this->assertEquals(200, $deleteResponse->getStatusCode());
         
-        $getPostsResponse = $this->actingAs($this->user)
+        $getPostsResponse = $this->actingAs($this->user, 'api')
             ->get('/api/users/' . $this->user->id . '/posts');
         $this->assertEquals(200, $getPostsResponse->getStatusCode());
         $json = json_decode($getPostsResponse->getContent());
@@ -48,7 +48,7 @@ class DeletePostTest extends TestCase
             'user_id' => $otherUser
         ]);
     
-        $deleteResponse = $this->actingAs($this->user)
+        $deleteResponse = $this->actingAs($this->user, 'api')
             ->delete('/api/posts/' . $post->id);
         
         $this->assertEquals(403, $deleteResponse->getStatusCode());

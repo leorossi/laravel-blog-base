@@ -25,14 +25,14 @@ class CreatePostTest extends TestCase
     public function testUserCanCreatePost() {
         
         $user = $this->user;
-        $response = $this->actingAs($user)->post('/api/posts', [
+        $response = $this->actingAs($user, 'api')->post('/api/posts', [
             'title' => 'Sample title',
             'body' => 'this is a sample body'
         ]);
         
         $this->assertEquals(200, $response->status());
         
-        $response = $this->actingAs($user)->get('/api/users/' . $user->id . '/posts');
+        $response = $this->actingAs($user, 'api')->get('/api/users/' . $user->id . '/posts');
         $this->assertEquals(200, $response->status());
         $json = json_decode($response->getContent());
         

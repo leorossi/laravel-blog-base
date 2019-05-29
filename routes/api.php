@@ -26,3 +26,7 @@ Route::get('/posts/{post}/comments', 'Api\CommentsController@forPost');
 Route::post('/posts/{post}/comments', 'Api\CommentsController@store');
 Route::put('/comments/{comment}', 'Api\CommentsController@update');
 Route::delete('/comments/{comment}', 'Api\CommentsController@destroy');
+
+
+Route::post('/register', 'Api\RegisterController@register');
+Route::post('/login', 'Api\LoginController@login');

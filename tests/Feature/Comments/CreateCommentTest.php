@@ -32,13 +32,12 @@ class CreateCommentTest extends TestCase
         $reader = factory(User::class)->create([
             'role_id' => $role->id
         ]);
-        $response = $this->actingAs($reader)->post('/api/posts/' . $this->post->id . '/comments', [
+        $response = $this->actingAs($reader, 'api')->post('/api/posts/' . $this->post->id . '/comments', [
             'body' => 'this is a sample body for the comment'
         ]);
-        
         $this->assertEquals(200, $response->status());
         
-        $response = $this->actingAs($reader)->get('/api/posts/' . $this->post->id . '/comments');
+        $response = $this->actingAs($reader, 'api')->get('/api/posts/' . $this->post->id . '/comments');
         $this->assertEquals(200, $response->status());
         $json = json_decode($response->getContent());
         
@@ -56,13 +55,13 @@ class CreateCommentTest extends TestCase
         $reader = factory(User::class)->create([
             'role_id' => $role->id
         ]);
-        $response = $this->actingAs($reader)->post('/api/posts/' . $this->post->id . '/comments', [
+        $response = $this->actingAs($reader, 'api')->post('/api/posts/' . $this->post->id . '/comments', [
             'body' => 'this is a sample body for the comment'
         ]);
         
         $this->assertEquals(403, $response->status());
         
-        $response = $this->actingAs($reader)->get('/api/posts/' . $this->post->id . '/comments');
+        $response = $this->actingAs($reader, 'api')->get('/api/posts/' . $this->post->id . '/comments');
         $this->assertEquals(200, $response->status());
         $json = json_decode($response->getContent());
         

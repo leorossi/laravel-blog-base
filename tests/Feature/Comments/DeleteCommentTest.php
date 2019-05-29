@@ -38,7 +38,7 @@ class DeleteCommentTest extends TestCase
             'post_id' => $this->post->id
         ]);
     
-        $response = $this->actingAs($reader)->delete('/api/comments/' . $comment->id);
+        $response = $this->actingAs($reader, 'api')->delete('/api/comments/' . $comment->id);
         $this->assertEquals(200, $response->status());
     }
     
@@ -52,10 +52,10 @@ class DeleteCommentTest extends TestCase
             'post_id' => $this->post->id
         ]);
     
-        $response = $this->actingAs($reader)->delete('/api/comments/' . $comment->id);
+        $response = $this->actingAs($reader, 'api')->delete('/api/comments/' . $comment->id);
         $this->assertEquals(403, $response->status());
     
-        $response = $this->actingAs($reader)->get('/api/posts/' . $this->post->id . '/comments');
+        $response = $this->actingAs($reader, 'api')->get('/api/posts/' . $this->post->id . '/comments');
         $this->assertEquals(200, $response->status());
         $json = json_decode($response->getContent());
     
